@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 //axios import buraya gelecek
 
 var benimIP;
@@ -31,6 +33,8 @@ async function ipAdresimiAl(){
 	ADIM 5'e gelene kadar fonksiyonunuzu test etmek için ip nizi URL'ye manuel olarak ekleyebilirsiniz.
 */
 
+
+
 /*
 	ADIM 2: Geri döndürülen verileri inceleyin, bu sizin ip bilgileriniz! Bileşen fonksiyonunuzu geliştirmek içindeki bu veri yapısını
 	iyice anlamanız gerekmektedir.
@@ -54,6 +58,9 @@ async function ipAdresimiAl(){
     </div>
 */
 
+
+
+
 /*
 	ADIM 4: API'den alınan verileri kullanarak ADIM 3'te verilen yapıda bir kart oluşturun ve 
 	bu kartı DOM olarak .cards elementinin içine ekleyin. 
@@ -70,3 +77,84 @@ async function ipAdresimiAl(){
 
 
 //kodlar buraya gelecek
+
+
+
+const url = 'https://apis.ergineer.com/ipgeoapi/88.230.53.12';
+
+axios.get(url)
+  .then(response => {
+    console.log(response.data);
+  })
+
+
+  .catch(error => {
+    console.error(error);
+  });
+
+
+  function updateHTMLBody(data) {
+	var cardDiv = document.createElement('div');
+	cardDiv.className = 'card';
+  
+	var flag = document.createElement('img');
+	flag.src = data.ülkebayrağı;
+	cardDiv.appendChild(flag);
+  
+	var cardInfoDiv = document.createElement('div');
+	cardInfoDiv.className = 'card-info';
+	cardDiv.appendChild(cardInfoDiv);
+  
+	var ipHeading = document.createElement('h3');
+	ipHeading.className = 'ip';
+	ipHeading.textContent = data.sorgu;
+	cardInfoDiv.appendChild(ipHeading);
+
+  
+	var ulke = document.createElement('p');
+	ulke.className = 'ulke';
+	ulke.textContent = data.ülke + data.ülkeKodu;
+	cardInfoDiv.appendChild(ulke);
+  
+	var enlem = document.createElement('p');
+	enlem.textContent = 'Enlem: ' + data.enlem;
+	cardInfoDiv.appendChild(enlem);
+  
+	var boylam = document.createElement('p');
+	boylam.textContent = 'Boylam: ' + data.boylam;
+	cardInfoDiv.appendChild(boylam);
+  
+	var sehir = document.createElement('p');
+	sehir.textContent = 'Şehir: ' + data.şehir;
+	cardInfoDiv.appendChild(sehir);
+  
+	var saat = document.createElement('p');
+	saat.textContent = 'Saat dilimi: ' + data.saatdilimi;
+	cardInfoDiv.appendChild(saat);
+  
+	var parabirimi = document.createElement('p');
+	parabirimi.textContent = 'Para birimi: ' + data.parabirimi;
+	cardInfoDiv.appendChild(parabirimi);
+  
+	var is = document.createElement('p');
+	is.textContent = 'ISP: ' + data.isp;
+	cardInfoDiv.appendChild(is);
+  
+	document.body.appendChild(cardDiv);
+  }
+  
+  
+  axios.get('https://apis.ergineer.com/ipgeoapi/88.230.53.12')
+	.then(function(response) {
+	  var data = response.data;
+	  updateHTMLBody(data);
+	})
+	.catch(function(error) {
+	  console.log(error);
+	});
+
+
+
+
+	
+
